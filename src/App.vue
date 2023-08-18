@@ -1,5 +1,37 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, onBeforeRouteUpdate, useRouter } from 'vue-router'
+import axios from 'axios'
+import newRoute from './views/newRoute.vue'
+
+import { onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref } from 'vue';
+
+const router = useRouter()
+const items = ref();
+const loading = ref(true);
+
+async function fetchData() {
+  try {
+    const {data} = await axios('http://localhost:3000/data');
+    items.value = data;
+    loading.value = false;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    loading.value = false;
+  } 
+}
+
+fetchData();
+
+// onMounted(() => {
+//   items.value.tabs.forEach((item: string, index: number )=> {
+//     if(!index){
+//       router.addRoute({ name: items.value.tabdata[item]['title'], path: `/`, component: newRoute, props:{label: 'pepe'}})
+//     }
+
+//     router.addRoute({ name: items.value.tabdata[item]['title'], path: `/${items.value.tabdata[item]['title']}`, component: newRoute, props:{label: 'pepe'}})
+//   });
+// })
+
 
 </script>
 
@@ -7,11 +39,14 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
     <div class="wrapper">
       <h1>Data<span class="bold">Guard</span></h1>
-
-      <nav>
+      
+      <span v-if="loading">Loading...</span>
+      <nav v-else>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/Finance">Finance</RouterLink>
+        <RouterLink to="/Personnel">Personnel</RouterLink>
       </nav>
+
     </div>
   </header>
 
