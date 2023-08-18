@@ -6,7 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <header>
     <div class="wrapper">
-     <h1>Data<span class="bold">Guard</span></h1>
+      <h1>Data<span class="bold">Guard</span></h1>
 
       <nav>
         <RouterLink to="/">Home</RouterLink>
@@ -21,16 +21,22 @@ import { RouterLink, RouterView } from 'vue-router'
 <style lang="scss" scoped>
 header {
   max-height: 100vh;
-  background-color: antiquewhite;
+  background-color: rgb(233, 233, 233);
   min-width: 270px;
 }
 
 nav {
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
+
   a {
     text-decoration: none;
     transition: 0.4s;
+    padding: 10px 0;
+    position: relative;
+    padding-left: 24px;
+    color: black;
+    font-size: 18px;
 
     /* 
     Using 'router-link-active' instead of 'router-link-exact-active',
@@ -38,18 +44,26 @@ flex-direction: column;
     linke "/Marketing/something"
     */
 
-    &.router-link-active{
-      background-color: red;
+    &.router-link-active {
+      background-color: white;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background-color: #ff0000;
+      }
     }
   }
 }
 
-h1{
+h1 {
   padding: 16px;
 }
 
 .bold {
   font-weight: bold;
-}
-
-</style>
+}</style>
