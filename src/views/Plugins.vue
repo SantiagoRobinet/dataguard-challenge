@@ -1,37 +1,30 @@
 <script setup lang="ts">
-import PluginItem from '@/components/PluginItem.vue';
 import { useTabsStore } from '@/stores/tabs';
-import { onBeforeMount, onBeforeUpdate, onMounted, onUnmounted, onUpdated, reactive, ref } from 'vue';
+import PluginsList from '@/components/PluginsList.vue';
 
 const { tabdata } = defineProps<{
-  tabdata: {tabId: string}
+  tabdata: { tabId: string }
 }>()
 
-const { getTab } = useTabsStore()
-const tab = ref();
+const { getTab, updateTab } = useTabsStore()
+const tab = getTab(tabdata.tabId);
 
-onMounted(() => {
-console.log(tabdata.tabId)
-  tab.value = getTab(tabdata.tabId)
-})
+
+const handleClick = (payload:  { pluginId: string, isActive: boolean }) => {
+  updateTab(payload, tabdata.tabId)
+}
 
 </script>
 
 <template>
   <main>
-    <p>{{ tabdata.tabId}}</p>
-    <p>{{ tab}}</p>
-
-    <!-- <h2>{{ tab.title }} Plugins</h2>
-    <PluginItem v-for="activePlugin in tab.active" title="Plugin Active"
-      description="Aliqua tempor nostrud occaecat enim nulla proident nostrud enim adipisicing pariatur velit" />
-
-    <PluginItem v-for="disabledPlugin in tab.disabled" title="Plugin Disbled"
-      description="Aliqua tempor nostrud occaecat enim nulla proident nostrud enim adipisicing pariatur velit" />
-
-    <PluginItem v-for="inactivePlugin in tab.inactive" title="Plugin Inactive"
-      description="Aliqua tempor nostrud occaecat enim nulla proident nostrud enim adipisicing pariatur velit" /> -->
-
+    <PluginsList 
+    :title="tab.title"
+    :active-plugins="tab.active" 
+    :disabled-plugins="tab.disabled"
+    :inactive-plugins="tab.inactive"
+    @onPluginClicked="handleClick"
+    />
   </main>
 </template>
 

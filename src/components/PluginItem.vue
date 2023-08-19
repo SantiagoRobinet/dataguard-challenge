@@ -1,21 +1,29 @@
 <script setup lang="ts">
-const { title, description } = defineProps<{
+import { ref } from 'vue';
+
+const props = defineProps<{
+    id: string,
     title: string,
     description: string,
+    isActive?: boolean,
+    isDisabled?:boolean
 }>()
+
+const isPluginActive = ref(props.isActive)
+
 
 
 </script>
 
 <template>
-    <div class="container">
+    <div class="container" :class="{disabled: isDisabled}">
         <div class="container__details">
-            <h3 class="title">{{ title }}</h3>
-            <p>{{ description }}</p>
+            <h3 class="title">{{ props.title }}</h3>
+            <p>{{ props.description }}</p>
         </div>
         <div class="container__switch">
             <label class="switch">
-                <input type="checkbox">
+                <input @click="$emit('onClick', { pluginId: props.id, isActive: isPluginActive })" type="checkbox" v-model="isPluginActive">
                 <span class="slider round"></span>
             </label>
             <span>Blocked</span>
@@ -106,5 +114,9 @@ input:checked+.slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+.disabled {
+ opacity: 0.4;
 }
 </style>

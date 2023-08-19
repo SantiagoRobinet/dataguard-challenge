@@ -35,6 +35,12 @@ export const useTabsStore = defineStore('tabs' ,{
     getTab: (state) => {
       return (tabId: string) => state.tabs[tabId]
     }
+  },
+  actions: {
+    // updateTab(payload:  { pluginId: string, isActive: boolean } , tabId: string){
+    //   const pluginSection = payload.isActive ? 'active' : 'inactive'
+    //   this.tabs[tabId][pluginSection] = 
+    // }
   }
 
 })
