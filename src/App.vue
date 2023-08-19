@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { RouterLink, RouterView, onBeforeRouteUpdate, useRouter } from 'vue-router'
+import { RouterLink, RouterView, useRouter } from 'vue-router'
 import axios from 'axios'
-import newRoute from './views/newRoute.vue'
 
-import { onBeforeMount, onBeforeUpdate, onMounted, onUpdated, ref } from 'vue';
+import { onBeforeUpdate, ref } from 'vue';
 
-const router = useRouter()
+import Plugins from './views/Plugins.vue';
 const items = ref();
 const loading = ref(true);
+const router = useRouter()
 
 async function fetchData() {
   try {
@@ -22,15 +22,14 @@ async function fetchData() {
 
 fetchData();
 
-// onMounted(() => {
-//   items.value.tabs.forEach((item: string, index: number )=> {
-//     if(!index){
-//       router.addRoute({ name: items.value.tabdata[item]['title'], path: `/`, component: newRoute, props:{label: 'pepe'}})
-//     }
+onBeforeUpdate(() => {
+  items.value.tabs.forEach((item: string )=> {
+    router.addRoute({ name: items.value.tabdata[item]['title'], path: `/${item}`, component: Plugins, props:{label: item }})
+    console.log(item)
+  });
 
-//     router.addRoute({ name: items.value.tabdata[item]['title'], path: `/${items.value.tabdata[item]['title']}`, component: newRoute, props:{label: 'pepe'}})
-//   });
-// })
+  router.push(items.value.tabs[0])
+})
 
 
 </script>
@@ -42,9 +41,7 @@ fetchData();
       
       <span v-if="loading">Loading...</span>
       <nav v-else>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/Finance">Finance</RouterLink>
-        <RouterLink to="/Personnel">Personnel</RouterLink>
+        <RouterLink v-for="item in items.tabs" :to="item">{{item}}</RouterLink>
       </nav>
 
     </div>
