@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { RouterLink, RouterView, useRouter } from 'vue-router'
 import axios from 'axios'
-
 import { onBeforeUpdate, ref } from 'vue';
-
 import Plugins from './views/Plugins.vue';
+
+
+const router = useRouter()
+const routesNames: string[] = []
 const items = ref();
 const loading = ref(true);
-const router = useRouter()
 
 async function fetchData() {
   try {
@@ -24,11 +25,13 @@ fetchData();
 
 onBeforeUpdate(() => {
   items.value.tabs.forEach((item: string )=> {
-    router.addRoute({ name: items.value.tabdata[item]['title'], path: `/${item}`, component: Plugins, props:{label: item }})
-    console.log(item)
+    const routeName: string = items.value.tabdata[item]['title']
+    routesNames.push(routeName)
+
+    router.addRoute({ name: routeName, path:`/${routeName.toLocaleLowerCase()}`, component: Plugins, props:{ tabdata: items.value.tabdata[item] }})
   });
 
-  router.push(items.value.tabs[0])
+  router.push(routesNames[0].toLocaleLowerCase())
 })
 
 
@@ -41,7 +44,7 @@ onBeforeUpdate(() => {
       
       <span v-if="loading">Loading...</span>
       <nav v-else>
-        <RouterLink v-for="item in items.tabs" :to="item">{{item}}</RouterLink>
+        <RouterLink v-for="route in routesNames" :to="`/${route.toLocaleLowerCase()}`">{{ route }}</RouterLink>
       </nav>
 
     </div>
@@ -73,7 +76,7 @@ nav {
     /* 
     Using 'router-link-active' instead of 'router-link-exact-active',
     allow us to see the link active even if we go deeper in the URL
-    linke "/Marketing/something"
+    linke "/marketing/something"
     */
 
     &.router-link-active {
