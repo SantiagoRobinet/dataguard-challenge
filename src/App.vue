@@ -22,6 +22,7 @@ async function fetchData() {
 }
 
 fetchData();
+console.log('render')
 
 onBeforeUpdate(() => {
   items.value.tabs.forEach((item: string )=> {
@@ -32,8 +33,8 @@ onBeforeUpdate(() => {
       name: routeName,
       path:`/${routeName.toLocaleLowerCase()}`, 
       component: Plugins, 
-      props:{ tabdata: items.value.tabdata[item]
-      }})
+      props:{ tabdata: routeName }
+    })
   });
 
   router.push(routesNames[0].toLocaleLowerCase())

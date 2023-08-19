@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import PluginItem from '@/components/PluginItem.vue';
+import { useTabsStore } from '@/stores/tabs';
+import { onBeforeMount, onMounted } from 'vue';
 
 const { tabdata } = defineProps<{
-  tabdata: {
-    title: string,
-    icon: string,
-    active: string[],
-    disabled: string[],
-    inactive: string[]
-  }
+  tabdata: string
 }>()
 
+const { getTab } = useTabsStore()
+
+onBeforeMount(() => {
+  console.log(tabdata)
+  getTab(tabdata)
+})
 
 </script>
 
