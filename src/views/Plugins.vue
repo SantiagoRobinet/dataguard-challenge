@@ -10,6 +10,8 @@ const { tabdata } = defineProps<{
     inactive: string[]
   }
 }>()
+
+
 </script>
 
 <template>
@@ -19,12 +21,11 @@ const { tabdata } = defineProps<{
     <PluginItem v-for="activePlugin in tabdata.active" title="Plugin Active"
       description="Aliqua tempor nostrud occaecat enim nulla proident nostrud enim adipisicing pariatur velit" />
 
-    <PluginItem v-for="inactivePlugin in tabdata.inactive" title="Plugin Inactive"
-      description="Aliqua tempor nostrud occaecat enim nulla proident nostrud enim adipisicing pariatur velit" />
-
     <PluginItem v-for="disabledPlugin in tabdata.disabled" title="Plugin Disbled"
       description="Aliqua tempor nostrud occaecat enim nulla proident nostrud enim adipisicing pariatur velit" />
 
+    <PluginItem v-for="inactivePlugin in tabdata.inactive" title="Plugin Inactive"
+      description="Aliqua tempor nostrud occaecat enim nulla proident nostrud enim adipisicing pariatur velit" />
 
   </main>
 </template>

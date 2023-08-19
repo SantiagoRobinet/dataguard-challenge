@@ -28,7 +28,12 @@ onBeforeUpdate(() => {
     const routeName: string = items.value.tabdata[item]['title']
     routesNames.push(routeName)
 
-    router.addRoute({ name: routeName, path:`/${routeName.toLocaleLowerCase()}`, component: Plugins, props:{ tabdata: items.value.tabdata[item] }})
+    router.addRoute({ 
+      name: routeName,
+      path:`/${routeName.toLocaleLowerCase()}`, 
+      component: Plugins, 
+      props:{ tabdata: items.value.tabdata[item]
+      }})
   });
 
   router.push(routesNames[0].toLocaleLowerCase())
