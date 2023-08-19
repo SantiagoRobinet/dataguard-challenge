@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { RouterLink, RouterView, useRouter } from 'vue-router'
+import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
-import { onBeforeUpdate, ref } from 'vue';
+import { defineAsyncComponent, onBeforeUpdate, ref } from 'vue';
 import Plugins from './views/Plugins.vue';
 
 
@@ -12,28 +12,33 @@ const loading = ref(true);
 
 async function fetchData() {
   try {
-    const {data} = await axios('http://localhost:3000/data');
+    const { data } = await axios('http://localhost:3000/data');
     items.value = data;
     loading.value = false;
   } catch (error) {
     console.error('Error fetching data:', error);
     loading.value = false;
-  } 
+  }
 }
 
 fetchData();
-console.log('render')
 
 onBeforeUpdate(() => {
-  items.value.tabs.forEach((item: string )=> {
+  items.value.tabs.forEach((item: string) => {
     const routeName: string = items.value.tabdata[item]['title']
     routesNames.push(routeName)
 
-    router.addRoute({ 
+    router.addRoute({
       name: routeName,
-      path:`/${routeName.toLocaleLowerCase()}`, 
-      component: Plugins, 
-      props:{ tabdata: routeName }
+      path: `/${routeName.toLocaleLowerCase()}`,
+      /*
+       the only way that I could find to have correct data on component,
+        if I use () => import('./views/Plugins.vue'), as the warning says, the component will not work. 
+      */
+      component: defineAsyncComponent(() =>
+        import('./views/Plugins.vue')
+      ),
+      props: { tabdata: { tabId: item } }
     })
   });
 
@@ -47,7 +52,7 @@ onBeforeUpdate(() => {
   <header>
     <div class="wrapper">
       <h1>Data<span class="bold">Guard</span></h1>
-      
+
       <span v-if="loading">Loading...</span>
       <nav v-else>
         <RouterLink v-for="route in routesNames" :to="`/${route.toLocaleLowerCase()}`">{{ route }}</RouterLink>
@@ -107,4 +112,5 @@ h1 {
 
 .bold {
   font-weight: bold;
-}</style>
+}
+</style>
