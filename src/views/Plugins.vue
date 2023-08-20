@@ -6,12 +6,12 @@ const { tabdata } = defineProps<{
   tabdata: { tabId: string }
 }>()
 
-const { getTab, updateTab } = useTabsStore()
+const { getTab, updateData } = useTabsStore()
 const tab = getTab(tabdata.tabId);
 
 
 const handleClick = (payload:  { pluginId: string, isActive: boolean }) => {
-  updateTab(payload, tabdata.tabId)
+  updateData(payload, tabdata.tabId)
 }
 
 </script>

@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { type PluginDTO } from '../types/plugin'
 
+
 interface State {
     plugins: Record<string, PluginDTO>
 }
@@ -66,6 +67,9 @@ export const usePluginsStore = defineStore('plugins', {
     getters: {
         getPlugins: (state) => {
             return (pluginsIds: string[]) => pluginsIds.map((id: string) => ({ id: id, title: state.plugins[id]['title'], description: state.plugins[id]['title'] }))
+        },
+        getAllPlugins(state){
+            return state.plugins
         }
     },
 })

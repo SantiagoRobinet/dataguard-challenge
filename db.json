@@ -1,27 +1,53 @@
 {
   "data": {
-    "tabs": ["tab1", "tab2", "tab3"],
+    "tabs": [
+      "tab1",
+      "tab2",
+      "tab3"
+    ],
     "tabdata": {
       "tab1": {
         "title": "Marketing",
         "icon": "icon-marketing",
-        "active": ["plugin1", "plugin2", "plugin4"],
-        "disabled": ["plugin3"],
-        "inactive": ["plugin5", "plugin6"]
+        "active": [
+          "plugin2",
+          "plugin4"
+        ],
+        "disabled": [
+          "plugin3"
+        ],
+        "inactive": [
+          "plugin5",
+          "plugin6",
+          "plugin1"
+        ]
       },
       "tab2": {
         "title": "Finance",
-        "icon": "icon-finance",
-        "active": ["plugin7", "plugin8"],
-        "disabled": ["plugin9"],
-        "inactive": ["plugin10"]
+        "icon": "icon-marketing",
+        "active": [
+          "plugin7",
+          "plugin8"
+        ],
+        "disabled": [
+          "plugin9"
+        ],
+        "inactive": [
+          "plugin10"
+        ]
       },
       "tab3": {
         "title": "Personnel",
-        "icon": "icon-people",
-        "active": ["plugin11"],
-        "disabled": ["plugin12"],
-        "inactive": ["plugin13"]
+        "icon": "icon-marketing",
+        "active": [
+          "plugin11"
+        ],
+        "disabled": [
+          "plugin12"
+        ],
+        "inactive": [
+          "plugin13"
+        ]
       }
     },
     "plugins": {
