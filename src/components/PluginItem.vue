@@ -14,7 +14,6 @@ const isPluginActive = ref(props.isActive)
 const emit = defineEmits(['onClick'])
 
 const handleClick = () => {
-    console.log('plugin clicked',  { pluginId: props.id, isActive: isPluginActive })
     emit('onClick', { pluginId: props.id, isActive: isPluginActive.value })
 }
 
