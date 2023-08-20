@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { useRoutes } from './composables/useRoutes';
+import Loading from './views/Loading.vue';
 
-const { fetchAndRegisterRoutes , loading, routesNames} = useRoutes()
+const { fetchAndRegisterRoutes, loading, routesNames } = useRoutes()
 
 fetchAndRegisterRoutes()
 </script>
@@ -12,23 +13,31 @@ fetchAndRegisterRoutes()
     <div class="wrapper">
       <h1>Data<span class="bold">Guard</span></h1>
 
-      <span v-if="loading">Loading...</span>
-      <nav v-else>
+      <nav>
         <RouterLink v-for="route in routesNames" :to="`/${route.toLocaleLowerCase()}`">{{ route }}</RouterLink>
       </nav>
 
     </div>
   </header>
 
-  <RouterView />
+  
+  <Loading v-if="loading"/>
+  <RouterView  v-else/>
 </template>
 
 <style lang="scss" scoped>
 header {
   max-height: 100vh;
   background-color: rgb(233, 233, 233);
-  min-width: 270px;
+  min-width: 140px;
+  max-width: 270px;
+  width: 100%;
 }
+
+h1 {
+  padding: 16px;
+}
+
 
 nav {
   display: flex;
@@ -64,12 +73,12 @@ nav {
     }
   }
 }
-
-h1 {
-  padding: 16px;
-}
-
 .bold {
   font-weight: bold;
+}
+@media screen and (max-width: 550px) {
+   h1 {
+    font-size: 22px;
+  }
 }
 </style>
