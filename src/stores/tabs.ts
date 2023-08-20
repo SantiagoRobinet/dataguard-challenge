@@ -8,6 +8,8 @@ interface State {
   tabdata: Record<string, ITab>
 }
 
+type ITabSections = Pick<ITab, 'active' | 'disabled'>
+
 export const useTabsStore = defineStore('tabs', {
   state: (): State => ({
     tabs: [],
@@ -28,7 +30,7 @@ export const useTabsStore = defineStore('tabs', {
       const originSection = isActive ? 'active' : 'inactive'
       const newSection = isActive ? 'inactive' : 'active'
 
-      const updatedData = {
+      const payload = {
         tabs:[...this.tabs],
         tabdata:{
           ...this.tabdata,
@@ -41,14 +43,46 @@ export const useTabsStore = defineStore('tabs', {
         plugins: getAllPlugins
       };
 
-      const post = await axios.put('http://localhost:3000/data', updatedData)
+      const post = await axios.put('http://localhost:3000/data', payload)
 
       if(post.statusText === 'OK'){
         this.tabdata[tabId][originSection] = this.tabdata[tabId][originSection].filter((element) => element !== pluginId)
         this.tabdata[tabId][newSection].push(pluginId)
       }
 
+    },
+    async toggleAllPlugins(isEnabled: boolean){
+      const { getAllPlugins } = usePluginsStore()
+
+      const originSection = isEnabled ? 'active'  : 'disabled'
+      const newSection= isEnabled ? 'disabled' : 'active'
+      const newTabData: any = {}
+      
+      this.tabs.forEach((tab) => {
+        const actualTabData = this.tabdata[tab]
+
+        newTabData[tab] = {
+          title: actualTabData['title'],
+          icon: actualTabData['icon'],
+          [originSection]: [],
+          inactive:[],
+          [newSection]:[...actualTabData.active,...actualTabData.inactive, ...actualTabData.disabled]
+        }
+      })
+
+      const payload = {
+        tabs:[...this.tabs],
+        tabdata: { ...newTabData},
+        plugins: getAllPlugins
+      }
+
+      const post = await axios.put('http://localhost:3000/data', payload)
+      
+      if(post.statusText === 'OK'){
+       this.tabdata = newTabData
+      }
     }
+    
   }
 
 })

@@ -2,6 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { useRoutes } from './composables/useRoutes';
 import Loading from './views/Loading.vue';
+import GeneralSwitch from './components/GeneralSwitch.vue'
 
 const { fetchAndRegisterRoutes, loading, routesNames } = useRoutes()
 
@@ -18,6 +19,7 @@ fetchAndRegisterRoutes()
       </nav>
 
     </div>
+    <GeneralSwitch />
   </header>
 
   
@@ -32,6 +34,9 @@ header {
   min-width: 140px;
   max-width: 270px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 h1 {
