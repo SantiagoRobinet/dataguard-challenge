@@ -18,6 +18,15 @@ export const useTabsStore = defineStore('tabs', {
   getters: {
     getTab: (state) => {
       return (tabId: string) => state.tabdata[tabId]
+    },
+    arePluginsEnabled(state){
+      let areAllPluginsEnabled: string[] = [];
+      
+      state.tabs.forEach((tabId: string) => {
+       areAllPluginsEnabled = [...areAllPluginsEnabled, ...state.tabdata[tabId]['active'],...state.tabdata[tabId]['inactive']]
+      }) 
+
+      return !!areAllPluginsEnabled.length
     }
   },
   actions: {
@@ -75,14 +84,13 @@ export const useTabsStore = defineStore('tabs', {
         tabdata: { ...newTabData},
         plugins: getAllPlugins
       }
-
+ 
       const post = await axios.put('http://localhost:3000/data', payload)
       
       if(post.statusText === 'OK'){
        this.tabdata = newTabData
       }
     }
-    
   }
 
 })

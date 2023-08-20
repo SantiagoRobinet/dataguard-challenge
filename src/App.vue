@@ -3,8 +3,10 @@ import { RouterLink, RouterView } from 'vue-router'
 import { useRoutes } from './composables/useRoutes';
 import Loading from './views/Loading.vue';
 import GeneralSwitch from './components/GeneralSwitch.vue'
+import { useTabsStore } from './stores/tabs';
 
 const { fetchAndRegisterRoutes, loading, routesNames } = useRoutes()
+const { arePluginsEnabled } = useTabsStore()
 
 fetchAndRegisterRoutes()
 </script>
@@ -19,7 +21,7 @@ fetchAndRegisterRoutes()
       </nav>
 
     </div>
-    <GeneralSwitch />
+    <GeneralSwitch :is-enabled="arePluginsEnabled"/>
   </header>
 
   

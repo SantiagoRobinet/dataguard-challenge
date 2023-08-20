@@ -1,26 +1,21 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import Switch from './Switch.vue';
 
 const props = defineProps<{
-    id: string,
-    title: string,
-    description: string,
     isActive?: boolean,
-    isDisabled?: boolean
+    displayStatus?: boolean;
 }>()
- 
 
-const isPluginActive = ref(props.isActive)
+const isSwitchActive = ref(props.isActive)
 
 const emit = defineEmits(['onClick'])
 
-const handleClick = ({isActive}: {isActive: boolean}) => {
-    emit('onClick', { pluginId: props.id, isActive })
+const handleClick = () => {
+    emit('onClick', {isActive: isSwitchActive.value})
 }
 
 const pluginStatus = computed(() => {
-    if (isPluginActive.value) {
+    if (isSwitchActive.value) {
         return 'Allowed'
     }
     return 'Blocked'
@@ -29,12 +24,14 @@ const pluginStatus = computed(() => {
 </script>
 
 <template>
-    <div class="container" :class="{ disabled: isDisabled }">
-        <div class="container__details">
-            <h3 class="container__details__title">{{ props.title }}</h3>
-            <p>{{ props.description }}</p>
-        </div>
-        <Switch @onClick="handleClick" :isActive="props.isActive" displayStatus />
+    <div class="container__switch">
+        <label class="switch">
+            <input @click="handleClick" type="checkbox" v-model="isSwitchActive">
+            <span class="slider round"></span>
+        </label>
+        <span v-if="displayStatus" class="status" :class="{ 'status--green': isSwitchActive, 'status--red': !isSwitchActive }">{{
+            pluginStatus
+        }}</span>
     </div>
 </template>
 
@@ -71,12 +68,12 @@ const pluginStatus = computed(() => {
         padding-left: 12px;
     }
 
-@media screen and (max-width: 768px) {
-   .flex-item {
-    width: calc(20.33% - 20px); 
-    margin: 10px 0; 
-  }
-}
+    @media screen and (max-width: 768px) {
+        .flex-item {
+            width: calc(20.33% - 20px);
+            margin: 10px 0;
+        }
+    }
 }
 
 
@@ -157,4 +154,5 @@ input:checked+.slider:before {
     &--red {
         color: rgb(192, 47, 47);
     }
-}</style>
+}
+</style>

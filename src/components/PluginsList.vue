@@ -4,15 +4,17 @@ import { usePluginsStore } from '@/stores/plugins';
 
 const props = defineProps<{
     title: string,
-    activePlugins: string[],
-    disabledPlugins: string[],
-    inactivePlugins: string[]
+    plugins: {
+        activePlugins: string[],
+        disabledPlugins: string[],
+        inactivePlugins: string[]
+    }
 }>()
 const { getPlugins } = usePluginsStore()
 
-const getActivePlugins = getPlugins(props.activePlugins)
-const getDisabledPlugins = getPlugins(props.disabledPlugins)
-const getInactivePlugins = getPlugins(props.inactivePlugins)
+const getActivePlugins = getPlugins(props.plugins.activePlugins)
+const getDisabledPlugins = getPlugins(props.plugins.disabledPlugins)
+const getInactivePlugins = getPlugins(props.plugins.inactivePlugins)
 
 const emit = defineEmits(['onPluginClicked'])
 
