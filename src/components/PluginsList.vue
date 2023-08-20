@@ -18,6 +18,7 @@ const emit = defineEmits(['onPluginClicked'])
 
 //payload type is used in tabs Store. DONT FORGET to refactor it.
 const handleClick = (payload: { pluginId: string, isActive: boolean }) => {
+    console.log(payload)
     emit('onPluginClicked', payload)
 }
 
@@ -27,13 +28,13 @@ const handleClick = (payload: { pluginId: string, isActive: boolean }) => {
     <main>
         <h2>{{ title }} Plugins</h2>
         <PluginItem v-for="activePlugin in getActivePlugins" :id="activePlugin.id" :title="activePlugin.title"
-            :description="activePlugin.description" isActive @onClick="handleClick"/>
-
-        <PluginItem v-for="disabledPlugin in getDisabledPlugins" :id="disabledPlugin.id" :title="disabledPlugin.title"
-            :description="disabledPlugin.description" @onClick="handleClick"/>
+            :description="activePlugin.description" isActive @onClick="handleClick" />
 
         <PluginItem v-for="inactivePlugin in getInactivePlugins" :id="inactivePlugin.id" :title="inactivePlugin.title"
-            :description="inactivePlugin.description" isDisabled/> 
+            :description="inactivePlugin.description" />
+
+        <PluginItem v-for="disabledPlugin in getDisabledPlugins" :id="disabledPlugin.id" :title="disabledPlugin.title"
+            :description="disabledPlugin.description" @onClick="handleClick" isDisabled />
     </main>
 </template>
 

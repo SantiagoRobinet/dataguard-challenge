@@ -11,7 +11,12 @@ const props = defineProps<{
 
 const isPluginActive = ref(props.isActive)
 
+const emit = defineEmits(['onClick'])
 
+const handleClick = () => {
+    console.log('plugin clicked',  { pluginId: props.id, isActive: isPluginActive })
+    emit('onClick', { pluginId: props.id, isActive: isPluginActive.value })
+}
 
 </script>
 
@@ -23,7 +28,7 @@ const isPluginActive = ref(props.isActive)
         </div>
         <div class="container__switch">
             <label class="switch">
-                <input @click="$emit('onClick', { pluginId: props.id, isActive: isPluginActive })" type="checkbox" v-model="isPluginActive">
+                <input @click="handleClick" type="checkbox" v-model="isPluginActive">
                 <span class="slider round"></span>
             </label>
             <span>Blocked</span>

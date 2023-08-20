@@ -42,10 +42,12 @@ export const useTabsStore = defineStore('tabs', {
       };
 
       const post = await axios.put('http://localhost:3000/data', updatedData)
+
       if(post.statusText === 'OK'){
         this.tabdata[tabId][originSection] = this.tabdata[tabId][originSection].filter((element) => element !== pluginId)
         this.tabdata[tabId][newSection].push(pluginId)
       }
+
     }
   }
 
