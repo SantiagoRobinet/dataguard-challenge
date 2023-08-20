@@ -3,9 +3,11 @@ import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { defineAsyncComponent, onBeforeUpdate, ref } from 'vue';
 import { useTabsStore } from './stores/tabs';
+import { usePluginsStore } from './stores/plugins';
 
 const router = useRouter()
 const { setTabsState } = useTabsStore()
+const { setPluginsState } = usePluginsStore()
 const routesNames: string[] = []
 const items = ref();
 const loading = ref(true);
@@ -22,6 +24,9 @@ async function fetchData() {
     setTabsState({
       tabs: items.value.tabs,
       tabdata: items.value.tabdata
+    })
+    setPluginsState({
+      plugins: items.value.plugins
     })
   }
 }
