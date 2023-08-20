@@ -24,26 +24,34 @@ const handleClick = (payload: { pluginId: string, isActive: boolean }) => {
 </script>
 
 <template>
-    <main>
-        <h2>{{ title }} Plugins</h2>
+    <h2>{{ title }} Plugins</h2>
+    <div class="flex-container">
         <PluginItem v-for="activePlugin in getActivePlugins" :id="activePlugin.id" :title="activePlugin.title"
-            :description="activePlugin.description" isActive @onClick="handleClick" />
+            :description="activePlugin.description" isActive @onClick="handleClick" class="flex-item" />
 
         <PluginItem v-for="inactivePlugin in getInactivePlugins" :id="inactivePlugin.id" :title="inactivePlugin.title"
-            :description="inactivePlugin.description" @onClick="handleClick" />
+            :description="inactivePlugin.description" @onClick="handleClick" class="flex-item" />
 
         <PluginItem v-for="disabledPlugin in getDisabledPlugins" :id="disabledPlugin.id" :title="disabledPlugin.title"
-            :description="disabledPlugin.description" isDisabled />
-    </main>
+            :description="disabledPlugin.description" isDisabled class="flex-item" />
+    </div>
 </template>
 
-<style lang="scss">
-main {
-    padding: 24px;
-}
-
+<style lang="scss" scoped>
 h2 {
     font-size: 18px;
     margin-bottom: 32px;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) {
+    .flex-container {
+        flex-direction: column;
+    }
+
 }
 </style>

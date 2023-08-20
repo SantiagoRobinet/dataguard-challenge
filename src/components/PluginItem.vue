@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
     id: string,
     title: string,
     description: string,
     isActive?: boolean,
-    isDisabled?:boolean
+    isDisabled?: boolean
 }>()
 
 const isPluginActive = ref(props.isActive)
@@ -17,12 +17,19 @@ const handleClick = () => {
     emit('onClick', { pluginId: props.id, isActive: isPluginActive.value })
 }
 
+const pluginStatus = computed(() => {
+    if (isPluginActive.value) {
+        return 'Allowed'
+    }
+    return 'Blocked'
+})
+
 </script>
 
 <template>
-    <div class="container" :class="{disabled: isDisabled}">
+    <div class="container" :class="{ disabled: isDisabled }">
         <div class="container__details">
-            <h3 class="title">{{ props.title }}</h3>
+            <h3 class="container__details__title">{{ props.title }}</h3>
             <p>{{ props.description }}</p>
         </div>
         <div class="container__switch">
@@ -30,41 +37,61 @@ const handleClick = () => {
                 <input @click="handleClick" type="checkbox" v-model="isPluginActive">
                 <span class="slider round"></span>
             </label>
-            <span>Blocked</span>
+            <span class="status" :class="{ 'status--green': isPluginActive, 'status--red': !isPluginActive }">{{
+                pluginStatus
+            }}</span>
         </div>
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container {
     border: 2px solid rgb(196, 196, 196);
     border-radius: 8px;
     padding: 16px;
     display: flex;
     justify-content: space-between;
-    width: 350px;
+    width: calc(24.33% - 20px);
+    min-width: 300px;
+    max-width: 350px;
     height: 200px;
+    background-color: #f2f2f2;
+    margin: 10px;
+    box-sizing: border-box;
 
     &__details {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        &__title {
+            font-size: 24px;
+        }
+
     }
 
     &__switch {
-      place-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-left: 12px;
     }
+
+@media screen and (max-width: 768px) {
+   .flex-item {
+    width: calc(20.33% - 20px); 
+    margin: 10px 0; 
+  }
+}
 }
 
-.title {
-    font-size: 24px;
-}
 
 .switch {
     position: relative;
     display: inline-block;
-    width: 40px;
-    height: 24px;
+    width: 45px;
+    height: 25px;
+
 }
 
 .switch input {
@@ -80,7 +107,7 @@ const handleClick = () => {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: red;
+    background-color: rgb(192, 47, 47);
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -106,12 +133,11 @@ input:focus+.slider {
 }
 
 input:checked+.slider:before {
-    -webkit-transform: translateX(15px);
-    -ms-transform: translateX(15px);
-    transform: translateX(15px);
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
 }
 
-/* Rounded sliders */
 .slider.round {
     border-radius: 34px;
 }
@@ -121,7 +147,20 @@ input:checked+.slider:before {
 }
 
 .disabled {
- opacity: 0.4;
- pointer-events: none;
+    opacity: 0.4;
+    pointer-events: none;
 }
-</style>
+
+.status {
+    font-weight: bold;
+    font-size: 12px;
+    padding-top: 6px;
+
+    &--green {
+        color: rgb(117, 198, 117);
+    }
+
+    &--red {
+        color: rgb(192, 47, 47);
+    }
+}</style>
