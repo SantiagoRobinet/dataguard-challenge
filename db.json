@@ -10,7 +10,6 @@
         "title": "Marketing",
         "icon": "icon-marketing",
         "active": [
-          "plugin2",
           "plugin4"
         ],
         "disabled": [
@@ -19,7 +18,8 @@
         "inactive": [
           "plugin5",
           "plugin6",
-          "plugin1"
+          "plugin1",
+          "plugin2"
         ]
       },
       "tab2": {

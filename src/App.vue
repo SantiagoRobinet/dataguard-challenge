@@ -2,10 +2,10 @@
 import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import { defineAsyncComponent, onBeforeUpdate, ref } from 'vue';
-import Plugins from './views/Plugins.vue';
-
+import { useTabsStore } from './stores/tabs';
 
 const router = useRouter()
+const { setTabsState } = useTabsStore()
 const routesNames: string[] = []
 const items = ref();
 const loading = ref(true);
@@ -18,6 +18,11 @@ async function fetchData() {
   } catch (error) {
     console.error('Error fetching data:', error);
     loading.value = false;
+  } finally {
+    setTabsState({
+      tabs: items.value.tabs,
+      tabdata: items.value.tabdata
+    })
   }
 }
 
