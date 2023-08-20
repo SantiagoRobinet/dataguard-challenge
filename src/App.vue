@@ -1,61 +1,10 @@
 <script setup lang="ts">
-import { RouterLink, RouterView, useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
-import { defineAsyncComponent, onBeforeUpdate, ref } from 'vue';
-import { useTabsStore } from './stores/tabs';
-import { usePluginsStore } from './stores/plugins';
+import { RouterLink, RouterView } from 'vue-router'
+import { useRoutes } from './composables/useRoutes';
 
-const router = useRouter()
-const { setTabsState } = useTabsStore()
-const { setPluginsState } = usePluginsStore()
-const routesNames: string[] = []
-const items = ref();
-const loading = ref(true);
+const { fetchAndRegisterRoutes , loading, routesNames} = useRoutes()
 
-async function fetchData() {
-  try {
-    const { data } = await axios('http://localhost:3000/data');
-    items.value = data;
-    loading.value = false;
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    loading.value = false;
-  } finally {
-    setTabsState({
-      tabs: items.value.tabs,
-      tabdata: items.value.tabdata
-    })
-    setPluginsState({
-      plugins: items.value.plugins
-    })
-  }
-}
-
-fetchData();
-
-onBeforeUpdate(() => {
-  items.value.tabs.forEach((item: string) => {
-    const routeName: string = items.value.tabdata[item]['title']
-    routesNames.push(routeName)
-
-    router.addRoute({
-      name: routeName,
-      path: `/${routeName.toLocaleLowerCase()}`,
-      /*
-       the only way that I could find to have correct data on component,
-        if I use () => import('./views/Plugins.vue'), as the warning says, the component will not work. 
-      */
-      component: defineAsyncComponent(() =>
-        import('./views/Plugins.vue')
-      ),
-      props: { tabdata: { tabId: item } }
-    })
-  });
-
-  router.push(routesNames[0].toLocaleLowerCase())
-})
-
-
+fetchAndRegisterRoutes()
 </script>
 
 <template>
