@@ -3,6 +3,7 @@ import { useRouter } from "vue-router";
 import { useTabsStore } from '@/stores/tabs';
 import { usePluginsStore } from '@/stores/plugins';
 import axios from 'axios';
+import { api } from '@/constants/api';
 
 interface IAllRoutes {
     name: string,
@@ -22,8 +23,7 @@ export function useRoutes() {
 
     async function fetchAndRegisterRoutes() {
         try {
-            console.log(import.meta.env.VITE_API_BASE_URL)
-            const { data } = await axios(`${import.meta.env.VITE_API_BASE_URL}/data`);
+            const { data } = await axios(api.dataURL);
             items.value = data;
             loading.value = false;
             createRoutes();
