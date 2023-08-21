@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
     <RouterLink :to="to">
-        <img :src="`/src/assets/${icon}.png`" />
+        <img :src="`/${icon}.png`" />
         {{ label }}
     </RouterLink>
 </template>
