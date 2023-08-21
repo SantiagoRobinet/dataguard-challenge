@@ -58,9 +58,9 @@ export const useTabsStore = defineStore('tabs', {
         plugins: getAllPlugins
       };
 
-      const post = await axios.put('http://localhost:3000/data', payload)
-
-      if(post.statusText === 'OK'){
+      const post = await axios.put('https://server-dataguard.onrender.com/data', payload)
+      console.log(post)
+      if(post.status === 200){
         this.tabdata[tabId][originSection] = this.tabdata[tabId][originSection].filter((element) => element !== pluginId)
         this.tabdata[tabId][newSection].push(pluginId)
       }
@@ -91,9 +91,9 @@ export const useTabsStore = defineStore('tabs', {
         plugins: getAllPlugins
       }
  
-      const post = await axios.put('http://localhost:3000/data', payload)
+      const post = await axios.put('https://server-dataguard.onrender.com/data', payload)
       
-      if(post.statusText === 'OK'){
+      if(post.status === 200){
        this.tabdata = newTabData
       }
     }

@@ -22,7 +22,7 @@ export function useRoutes() {
 
     async function fetchAndRegisterRoutes() {
         try {
-            const { data } = await axios('http://localhost:3000/data');
+            const { data } = await axios('https://server-dataguard.onrender.com/data');
             items.value = data;
             loading.value = false;
             createRoutes();
