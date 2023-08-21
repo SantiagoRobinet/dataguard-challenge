@@ -9,9 +9,9 @@
       "tab1": {
         "title": "Marketing",
         "icon": "icon-marketing",
-        "active": [],
+        "disabled": [],
         "inactive": [],
-        "disabled": [
+        "active": [
           "plugin6",
           "plugin4",
           "plugin5",
@@ -23,9 +23,9 @@
       "tab2": {
         "title": "Finance",
         "icon": "icon-finance",
-        "active": [],
+        "disabled": [],
         "inactive": [],
-        "disabled": [
+        "active": [
           "plugin7",
           "plugin8",
           "plugin10",
@@ -35,9 +35,9 @@
       "tab3": {
         "title": "Personnel",
         "icon": "icon-people",
-        "active": [],
+        "disabled": [],
         "inactive": [],
-        "disabled": [
+        "active": [
           "plugin11",
           "plugin13",
           "plugin12"

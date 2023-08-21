@@ -9,15 +9,15 @@ const props = defineProps<{
 }>()
 
 const { toggleAllPlugins } = useTabsStore()
-const isEnabled = ref(props.isEnabled)
+const isStatusEnabled = ref(props.isEnabled)
 
 const handleClick = () => {
-    toggleAllPlugins(isEnabled.value)
-    isEnabled.value = !isEnabled.value
+    toggleAllPlugins(isStatusEnabled.value)
+    isStatusEnabled.value = !isStatusEnabled.value
 }
 
 const generalSwitchStatus = computed(() => {
-    if (isEnabled.value) {
+    if (isStatusEnabled.value) {
         return 'enabled'
     }
     return 'disabled'

@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { type ITab } from '../types/tab'
 import axios from 'axios'
 import { usePluginsStore } from './plugins'
+import { watch } from 'vue'
 
 interface State {
   tabs: string[],
@@ -20,13 +21,23 @@ export const useTabsStore = defineStore('tabs', {
       return (tabId: string) => state.tabdata[tabId]
     },
     arePluginsEnabled(state){
-      let areAllPluginsEnabled: string[] = [];
+      const tabsNames: string[] =  Object.keys(state.tabdata);
+      const tabsWithElements: any = [];
       
-      state.tabs.forEach((tabId: string) => {
-       areAllPluginsEnabled = [...areAllPluginsEnabled, ...state.tabdata[tabId]['active'],...state.tabdata[tabId]['inactive']]
-      }) 
+      
+      if(tabsNames.length){
+        tabsNames.forEach(tabId => {
+          if (state.tabdata[tabId].active.length > 0 || state.tabdata[tabId].inactive.length > 0) {
+            tabsWithElements.push(tabId);
+          }
+        });
 
-      return !!areAllPluginsEnabled.length
+      }
+
+
+      console.log( Object.keys(state.tabdata))
+      console.log('elements', Boolean(tabsWithElements.length))
+      return tabsWithElements.length
     }
   },
   actions: {
