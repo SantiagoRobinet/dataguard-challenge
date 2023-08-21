@@ -10,14 +10,15 @@
         "title": "Marketing",
         "icon": "icon-marketing",
         "disabled": [],
-        "inactive": [],
-        "active": [
-          "plugin4",
-          "plugin5",
+        "inactive": [
           "plugin1",
+          "plugin4",
           "plugin2",
-          "plugin3",
-          "plugin6"
+          "plugin3"
+        ],
+        "active": [
+          "plugin6",
+          "plugin5"
         ]
       },
       "tab2": {

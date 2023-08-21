@@ -1,21 +1,19 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
     isActive?: boolean,
     displayStatus?: boolean;
 }>()
 
-const isSwitchActive = ref(props.isActive)
-
 const emit = defineEmits(['onClick'])
 
 const handleClick = () => {
-    emit('onClick', {isActive: isSwitchActive.value})
+    emit('onClick', {isActive: props.isActive})
 }
 
 const pluginStatus = computed(() => {
-    if (isSwitchActive.value) {
+    if (props.isActive) {
         return 'Allowed'
     }
     return 'Blocked'
@@ -26,10 +24,10 @@ const pluginStatus = computed(() => {
 <template>
     <div class="container__switch">
         <label class="switch">
-            <input @click="handleClick" type="checkbox" v-model="isSwitchActive">
+            <input @click="handleClick" type="checkbox" :checked="isActive">
             <span class="slider round"></span>
         </label>
-        <span v-if="displayStatus" class="status" :class="{ 'status--green': isSwitchActive, 'status--red': !isSwitchActive }">{{
+        <span v-if="displayStatus" class="status" :class="{ 'status--green': isActive, 'status--red': !isActive }">{{
             pluginStatus
         }}</span>
     </div>

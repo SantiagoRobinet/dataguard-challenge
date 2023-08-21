@@ -3,26 +3,16 @@ import { RouterView } from 'vue-router'
 import { useRoutes } from './composables/useRoutes';
 import LoadingView from './views/LoadingView.vue';
 import GeneralSwitch from './components/GeneralSwitch.vue'
-import { useTabsStore } from './stores/tabs'
-import { computed } from 'vue';
 import CustomLink from './components/CustomLink.vue';
-
-const tabsStore = useTabsStore()
 
 const { fetchAndRegisterRoutes, loading, allRoutes } = useRoutes()
 
 fetchAndRegisterRoutes()
 
-const pluginsEnabled = computed(() => {
-  return tabsStore.arePluginsEnabled
-})
-
-
 </script>
 
 <template>
   <header>
-
     <!-- esto puede ser un Header component -->
     <div class="wrapper">
       <h1>Data<span class="bold">Guard</span></h1>
@@ -32,7 +22,7 @@ const pluginsEnabled = computed(() => {
       </nav>
 
     </div>
-    <GeneralSwitch :is-enabled="pluginsEnabled"/>
+    <GeneralSwitch />
   </header>
 
   
