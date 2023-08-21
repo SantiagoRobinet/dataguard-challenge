@@ -20,8 +20,7 @@ export const usePluginsStore = defineStore('plugins', {
         }
     },
     actions: {
-        //ADD plugins type
-        setPluginsState({plugins}: {plugins: {}}) {
+        setPluginsState({plugins}: State) {
             this.plugins = plugins
         }
     }
