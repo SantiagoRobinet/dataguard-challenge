@@ -1,9 +1,15 @@
 import { defineAsyncComponent, ref } from 'vue'
-import Plugins from "../views/Plugins.vue";
 import { useRouter } from "vue-router";
 import { useTabsStore } from '@/stores/tabs';
 import { usePluginsStore } from '@/stores/plugins';
 import axios from 'axios';
+
+interface IAllRoutes {
+    name: string,
+    icon: string,
+    id: string,
+    path: string
+}
 
 export function useRoutes() {
 
@@ -35,29 +41,32 @@ export function useRoutes() {
     }
 
     const router = useRouter();
-    const routesNames: string[] = [];
+    const allRoutes: IAllRoutes[] = [];
 
     function createRoutes() {
         items?.value.tabs.forEach((item: string) => {
             const routeName: string = items.value.tabdata[item]["title"];
-            routesNames.push(routeName);
+            const routeIcon: string = items.value.tabdata[item]["icon"];
+            const routePath: string = `/${routeName.toLocaleLowerCase()}`
+
+            allRoutes.push({ name: routeName, icon: routeIcon, id: item, path: routePath });
 
             router.addRoute({
                 name: routeName,
-                path: `/${routeName.toLocaleLowerCase()}`,
-                component:   defineAsyncComponent(() =>
-                        import('../views/Plugins.vue')
-                      ),
+                path: routePath,
+                component: defineAsyncComponent(() =>
+                    import('../views/Plugins.vue')
+                ),
                 props: { tabdata: { tabId: item } },
             });
         });
 
-        router.push(routesNames[0].toLocaleLowerCase());
+        router.push(allRoutes[0]['name'].toLocaleLowerCase());
     }
 
     return {
         loading,
         fetchAndRegisterRoutes,
-        routesNames
+        allRoutes
     }
 }

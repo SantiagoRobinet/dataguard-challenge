@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 import { useRoutes } from './composables/useRoutes';
 import Loading from './views/Loading.vue';
 import GeneralSwitch from './components/GeneralSwitch.vue'
 import { useTabsStore } from './stores/tabs'
 import { computed } from 'vue';
+import CustomLink from './components/CustomLink.vue';
 
 const tabsStore = useTabsStore()
 
-const { fetchAndRegisterRoutes, loading, routesNames } = useRoutes()
+const { fetchAndRegisterRoutes, loading, allRoutes } = useRoutes()
 
 fetchAndRegisterRoutes()
 
@@ -25,7 +26,7 @@ const pluginsEnabled = computed(() => {
       <h1>Data<span class="bold">Guard</span></h1>
 
       <nav>
-        <RouterLink  v-for="route in routesNames" :key="route" :to="`/${route.toLocaleLowerCase()}`">{{ route }}</RouterLink>
+        <CustomLink v-for="route in allRoutes" :key="route.id" :to="route.path" :label="route.name" :icon="route.icon" />
       </nav>
 
     </div>
