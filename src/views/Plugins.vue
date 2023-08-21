@@ -1,24 +1,14 @@
 <script setup lang="ts">
 import { useTabsStore } from '@/stores/tabs';
 import PluginsList from '@/components/PluginsList.vue';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 
 const { tabdata } = defineProps<{
   tabdata: { tabId: string }
 }>()
 
 const { getTab, updateData } = useTabsStore()
-const tab = getTab(tabdata.tabId);
-
-const activePlugins = computed(() => {
-  return tab.active
-})
-const inactivePlugins = computed(() => {
-  return tab.inactive
-})
-const disabledPlugins = computed(() => {
-  return tab.disabled
-})
+const tab = computed(() => getTab(tabdata.tabId));
 
 const handleClick = (payload: { pluginId: string, isActive: boolean }) => {
   updateData(payload, tabdata.tabId)
@@ -27,7 +17,8 @@ const handleClick = (payload: { pluginId: string, isActive: boolean }) => {
 
 <template>
   <main>
-    <PluginsList :title="tab.title" :plugins="{ activePlugins, inactivePlugins, disabledPlugins }"
+    <PluginsList :title="tab.title"
+      :plugins="{ activePlugins: tab.active, inactivePlugins: tab.inactive, disabledPlugins: tab.disabled }"
       @onPluginClicked="handleClick" />
   </main>
 </template>

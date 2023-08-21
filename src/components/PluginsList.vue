@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PluginItem from '@/components/PluginItem.vue';
 import { usePluginsStore } from '@/stores/plugins';
+import { computed } from 'vue';
 
 const props = defineProps<{
     title: string,
@@ -10,11 +11,11 @@ const props = defineProps<{
         inactivePlugins: string[]
     }
 }>()
-const { getPlugins } = usePluginsStore()
+const pluginsStore = usePluginsStore()
 
-const getActivePlugins = getPlugins(props.plugins.activePlugins)
-const getDisabledPlugins = getPlugins(props.plugins.disabledPlugins)
-const getInactivePlugins = getPlugins(props.plugins.inactivePlugins)
+const getActivePlugins = computed(() => pluginsStore.getPlugins(props.plugins.activePlugins))
+const getDisabledPlugins = computed(() => pluginsStore.getPlugins(props.plugins.disabledPlugins))
+const getInactivePlugins = computed(() => pluginsStore.getPlugins(props.plugins.inactivePlugins))
 
 const emit = defineEmits(['onPluginClicked'])
 
@@ -28,13 +29,13 @@ const handleClick = (payload: { pluginId: string, isActive: boolean }) => {
 <template>
     <h2>{{ title }} Plugins</h2>
     <div class="flex-container">
-        <PluginItem v-for="activePlugin in getActivePlugins" :id="activePlugin.id" :title="activePlugin.title"
+        <PluginItem v-for="activePlugin in getActivePlugins" :key="activePlugin.title" :id="activePlugin.id" :title="activePlugin.title"
             :description="activePlugin.description" isActive @onClick="handleClick" class="flex-item" />
 
-        <PluginItem v-for="inactivePlugin in getInactivePlugins" :id="inactivePlugin.id" :title="inactivePlugin.title"
+        <PluginItem v-for="inactivePlugin in getInactivePlugins" :key="inactivePlugin.title" :id="inactivePlugin.id" :title="inactivePlugin.title"
             :description="inactivePlugin.description" @onClick="handleClick" class="flex-item" />
 
-        <PluginItem v-for="disabledPlugin in getDisabledPlugins" :id="disabledPlugin.id" :title="disabledPlugin.title"
+        <PluginItem v-for="disabledPlugin in getDisabledPlugins" :key="disabledPlugin.title" :id="disabledPlugin.id" :title="disabledPlugin.title"
             :description="disabledPlugin.description" isDisabled class="flex-item" />
     </div>
 </template>

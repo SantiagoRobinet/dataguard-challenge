@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onUpdated, ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const props = defineProps<{
     isActive?: boolean,
@@ -20,9 +20,6 @@ const pluginStatus = computed(() => {
     }
     return 'Blocked'
 })
-onUpdated(() => {
-    console.log(props.isActive)
-})
 
 </script>
 
@@ -35,6 +32,7 @@ onUpdated(() => {
         <span v-if="displayStatus" class="status" :class="{ 'status--green': isSwitchActive, 'status--red': !isSwitchActive }">{{
             pluginStatus
         }}</span>
+        <span >{{ isActive }} & {{  isSwitchActive }}</span>
     </div>
 </template>
 

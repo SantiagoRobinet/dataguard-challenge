@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import Switch from './Switch.vue';
+import Switch from './SwitchItem.vue';
 
 const props = defineProps<{
     id: string,
@@ -9,23 +8,12 @@ const props = defineProps<{
     isActive?: boolean,
     isDisabled?: boolean
 }>()
- 
-
-const isPluginActive = ref(props.isActive)
 
 const emit = defineEmits(['onClick'])
 
 const handleClick = ({isActive}: {isActive: boolean}) => {
     emit('onClick', { pluginId: props.id, isActive })
 }
-
-const pluginStatus = computed(() => {
-    if (isPluginActive.value) {
-        return 'Allowed'
-    }
-    return 'Blocked'
-})
-
 </script>
 
 <template>

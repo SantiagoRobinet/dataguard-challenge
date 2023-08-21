@@ -3,10 +3,20 @@ import { RouterLink, RouterView } from 'vue-router'
 import { useRoutes } from './composables/useRoutes';
 import Loading from './views/Loading.vue';
 import GeneralSwitch from './components/GeneralSwitch.vue'
+import { useTabsStore } from './stores/tabs'
+import { computed } from 'vue';
+
+const tabsStore = useTabsStore()
 
 const { fetchAndRegisterRoutes, loading, routesNames } = useRoutes()
 
 fetchAndRegisterRoutes()
+
+const pluginsEnabled = computed(() => {
+  return tabsStore.arePluginsEnabled
+})
+
+
 </script>
 
 <template>
@@ -15,11 +25,11 @@ fetchAndRegisterRoutes()
       <h1>Data<span class="bold">Guard</span></h1>
 
       <nav>
-        <RouterLink v-for="route in routesNames" :to="`/${route.toLocaleLowerCase()}`">{{ route }}</RouterLink>
+        <RouterLink  v-for="route in routesNames" :key="route" :to="`/${route.toLocaleLowerCase()}`">{{ route }}</RouterLink>
       </nav>
 
     </div>
-    <GeneralSwitch />
+    <GeneralSwitch :is-enabled="pluginsEnabled"/>
   </header>
 
   
