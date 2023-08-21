@@ -37,7 +37,7 @@ export const useTabsStore = defineStore('tabs', {
 
       console.log( Object.keys(state.tabdata))
       console.log('elements', Boolean(tabsWithElements.length))
-      return tabsWithElements.length
+      return Boolean(tabsWithElements.length)
     }
   },
   actions: {

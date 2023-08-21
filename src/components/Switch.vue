@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onUpdated, ref } from 'vue';
 
 const props = defineProps<{
     isActive?: boolean,
@@ -19,6 +19,9 @@ const pluginStatus = computed(() => {
         return 'Allowed'
     }
     return 'Blocked'
+})
+onUpdated(() => {
+    console.log(props.isActive)
 })
 
 </script>

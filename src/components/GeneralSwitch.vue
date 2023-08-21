@@ -3,16 +3,11 @@ import { computed, ref } from 'vue';
 import { useTabsStore } from '../stores/tabs'
 import Switch from './Switch.vue';
 
-
-const props = defineProps<{
-    isEnabled?: boolean,
-}>()
-
-const { toggleAllPlugins } = useTabsStore()
-const isStatusEnabled = ref(props.isEnabled)
+const tabsStore = useTabsStore()
+const isStatusEnabled = ref(tabsStore.arePluginsEnabled)
 
 const handleClick = () => {
-    toggleAllPlugins(isStatusEnabled.value)
+    tabsStore.toggleAllPlugins(isStatusEnabled.value)
     isStatusEnabled.value = !isStatusEnabled.value
 }
 
@@ -23,11 +18,12 @@ const generalSwitchStatus = computed(() => {
     return 'disabled'
 })
 
+
 </script>
 <template>
-    <div class="container" :class="{'container--green': isEnabled , 'container--red': !isEnabled}" >
+    <div class="container" :class="{'container--green': isStatusEnabled , 'container--red': !isStatusEnabled}" >
         <p>All plugins {{ generalSwitchStatus }}</p>
-        <Switch @onClick="handleClick" :isActive="isEnabled"  />
+        <Switch @onClick="handleClick" :is-active="tabsStore.arePluginsEnabled"  />
     </div>
 </template>
 <style lang="scss" scoped>
