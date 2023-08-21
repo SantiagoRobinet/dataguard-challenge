@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { useRoutes } from './composables/useRoutes';
-import Loading from './views/Loading.vue';
+import LoadingView from './views/LoadingView.vue';
 import GeneralSwitch from './components/GeneralSwitch.vue'
 import { useTabsStore } from './stores/tabs'
 import { computed } from 'vue';
@@ -22,6 +22,8 @@ const pluginsEnabled = computed(() => {
 
 <template>
   <header>
+
+    <!-- esto puede ser un Header component -->
     <div class="wrapper">
       <h1>Data<span class="bold">Guard</span></h1>
 
@@ -34,7 +36,7 @@ const pluginsEnabled = computed(() => {
   </header>
 
   
-  <Loading v-if="loading"/>
+  <LoadingView v-if="loading"/>
   <RouterView  v-else/>
 </template>
 

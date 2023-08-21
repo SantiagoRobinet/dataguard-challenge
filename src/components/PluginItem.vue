@@ -11,7 +11,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['onClick'])
 
-const handleClick = ({isActive}: {isActive: boolean}) => {
+const handleClick = ({ isActive }: { isActive: boolean }) => {
     emit('onClick', { pluginId: props.id, isActive })
 }
 </script>
@@ -59,12 +59,12 @@ const handleClick = ({isActive}: {isActive: boolean}) => {
         padding-left: 12px;
     }
 
-@media screen and (max-width: 768px) {
-   .flex-item {
-    width: calc(20.33% - 20px); 
-    margin: 10px 0; 
-  }
-}
+    @media screen and (max-width: 768px) {
+        .flex-item {
+            width: calc(20.33% - 20px);
+            margin: 10px 0;
+        }
+    }
 }
 
 
@@ -145,4 +145,5 @@ input:checked+.slider:before {
     &--red {
         color: rgb(192, 47, 47);
     }
-}</style>
+}
+</style>

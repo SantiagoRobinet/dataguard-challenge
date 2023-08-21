@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts" >
 import { computed, ref } from 'vue';
 import { useTabsStore } from '../stores/tabs'
 import Switch from './SwitchItem.vue';
@@ -24,9 +24,9 @@ const generalSwitchStatus = computed(() => {
 
 </script>
 <template>
-    <div class="container" :class="{'container--green': isStatusEnabled , 'container--red': !isStatusEnabled}" >
+    <div class="container" :class="{ 'container--green': isStatusEnabled, 'container--red': !isStatusEnabled }">
         <p>All plugins {{ generalSwitchStatus }}</p>
-        <Switch @onClick="handleClick" :is-active="isStatusEnabled"  />
+        <Switch @onClick="handleClick" :is-active="isStatusEnabled" />
     </div>
 </template>
 <style lang="scss" scoped>
@@ -34,11 +34,12 @@ const generalSwitchStatus = computed(() => {
     display: flex;
     justify-content: space-around;
     padding-bottom: 40px;
-    &--green{
+
+    &--green {
         background: linear-gradient(to top, rgb(117, 198, 117), rgb(117, 198, 117, 0.5), transparent, transparent);
     }
-    
-    &--red{
+
+    &--red {
         background: linear-gradient(to top, rgb(192, 47, 47), rgb(192, 47, 47, 0.5), transparent, transparent);
     }
 }
@@ -46,6 +47,4 @@ const generalSwitchStatus = computed(() => {
 p {
     font-size: 16px;
 }
-
-
 </style>

@@ -55,7 +55,7 @@ export function useRoutes() {
                 name: routeName,
                 path: routePath,
                 component: defineAsyncComponent(() =>
-                    import('../views/Plugins.vue')
+                    import('../views/PluginsView.vue')
                 ),
                 props: { tabdata: { tabId: item } },
             });

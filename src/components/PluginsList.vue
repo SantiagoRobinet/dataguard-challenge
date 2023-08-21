@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PluginItem from '@/components/PluginItem.vue';
 import { usePluginsStore } from '@/stores/plugins';
+import type { UpdatePluginPayload } from '@/types/plugin';
 import { computed } from 'vue';
 
 const props = defineProps<{
@@ -19,8 +20,7 @@ const getInactivePlugins = computed(() => pluginsStore.getPlugins(props.plugins.
 
 const emit = defineEmits(['onPluginClicked'])
 
-//payload type is used in tabs Store. DONT FORGET to refactor it.
-const handleClick = (payload: { pluginId: string, isActive: boolean }) => {
+const handleClick = (payload: UpdatePluginPayload) => {
     emit('onPluginClicked', payload)
 }
 

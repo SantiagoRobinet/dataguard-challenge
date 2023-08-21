@@ -8,3 +8,8 @@ export interface IPlugin {
     description: string,
     id: string
 }
+
+export interface UpdatePluginPayload {
+    pluginId: string,
+    isActive: boolean
+}

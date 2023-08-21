@@ -2,6 +2,7 @@
 import { useTabsStore } from '@/stores/tabs';
 import PluginsList from '@/components/PluginsList.vue';
 import { computed } from 'vue';
+import type { UpdatePluginPayload } from '@/types/plugin';
 
 const { tabdata } = defineProps<{
   tabdata: { tabId: string }
@@ -10,7 +11,7 @@ const { tabdata } = defineProps<{
 const { getTab, updateData } = useTabsStore()
 const tab = computed(() => getTab(tabdata.tabId));
 
-const handleClick = (payload: { pluginId: string, isActive: boolean }) => {
+const handleClick = (payload: UpdatePluginPayload) => {
   updateData(payload, tabdata.tabId)
 }
 </script>

@@ -32,7 +32,6 @@ const pluginStatus = computed(() => {
         <span v-if="displayStatus" class="status" :class="{ 'status--green': isSwitchActive, 'status--red': !isSwitchActive }">{{
             pluginStatus
         }}</span>
-        <span >{{ isActive }} & {{  isSwitchActive }}</span>
     </div>
 </template>
 

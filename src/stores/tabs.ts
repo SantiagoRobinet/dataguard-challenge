@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { type ITab } from '../types/tab'
 import axios from 'axios'
 import { usePluginsStore } from './plugins'
+import type { UpdatePluginPayload } from '@/types/plugin'
 
 interface State {
   tabs: string[],
@@ -39,7 +40,7 @@ export const useTabsStore = defineStore('tabs', {
       this.tabs = tabs
       this.tabdata = tabdata
     },
-    async updateData({ pluginId, isActive }: { pluginId: string, isActive: boolean }, tabId: string) {
+    async updateData({ pluginId, isActive }: UpdatePluginPayload, tabId: string) {
       const { getAllPlugins } = usePluginsStore()
       const originSection = isActive ? 'active' : 'inactive'
       const newSection = isActive ? 'inactive' : 'active'
