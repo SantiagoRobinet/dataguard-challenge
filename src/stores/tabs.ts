@@ -2,14 +2,11 @@ import { defineStore } from 'pinia'
 import { type ITab } from '../types/tab'
 import axios from 'axios'
 import { usePluginsStore } from './plugins'
-import { watch } from 'vue'
 
 interface State {
   tabs: string[],
   tabdata: Record<string, ITab>
 }
-
-type ITabSections = Pick<ITab, 'active' | 'disabled'>
 
 export const useTabsStore = defineStore('tabs', {
   state: (): State => ({
@@ -34,9 +31,6 @@ export const useTabsStore = defineStore('tabs', {
 
       }
 
-
-      console.log( Object.keys(state.tabdata))
-      console.log('elements', Boolean(tabsWithElements.length))
       return Boolean(tabsWithElements.length)
     }
   },
