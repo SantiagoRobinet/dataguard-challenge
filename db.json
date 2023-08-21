@@ -11,14 +11,14 @@
         "icon": "icon-marketing",
         "disabled": [],
         "inactive": [
-          "plugin1",
-          "plugin4",
-          "plugin2",
-          "plugin3"
+          "plugin1"
         ],
         "active": [
           "plugin6",
-          "plugin5"
+          "plugin5",
+          "plugin4",
+          "plugin2",
+          "plugin3"
         ]
       },
       "tab2": {

@@ -22,7 +22,8 @@ export function useRoutes() {
 
     async function fetchAndRegisterRoutes() {
         try {
-            const { data } = await axios('https://server-dataguard.onrender.com/data');
+            console.log(import.meta.env.VITE_API_BASE_URL)
+            const { data } = await axios(`${import.meta.env.VITE_API_BASE_URL}/data`);
             items.value = data;
             loading.value = false;
             createRoutes();

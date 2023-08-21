@@ -58,7 +58,7 @@ export const useTabsStore = defineStore('tabs', {
         plugins: getAllPlugins
       };
 
-      const post = await axios.put('https://server-dataguard.onrender.com/data', payload)
+      const post = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/data`, payload)
       console.log(post)
       if(post.status === 200){
         this.tabdata[tabId][originSection] = this.tabdata[tabId][originSection].filter((element) => element !== pluginId)
@@ -91,7 +91,7 @@ export const useTabsStore = defineStore('tabs', {
         plugins: getAllPlugins
       }
  
-      const post = await axios.put('https://server-dataguard.onrender.com/data', payload)
+      const post = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/data`, payload)
       
       if(post.status === 200){
        this.tabdata = newTabData
