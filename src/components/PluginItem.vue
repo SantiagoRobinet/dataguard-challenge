@@ -37,7 +37,6 @@ const handleClick = ({ isActive }: { isActive: boolean }) => {
     min-width: 300px;
     max-width: 350px;
     height: 200px;
-    background-color: #f2f2f2;
     margin: 10px;
     box-sizing: border-box;
 
@@ -48,6 +47,8 @@ const handleClick = ({ isActive }: { isActive: boolean }) => {
 
         &__title {
             font-size: 24px;
+            color: #003349;
+
         }
 
     }

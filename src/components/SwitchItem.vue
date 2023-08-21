@@ -35,30 +35,6 @@ const pluginStatus = computed(() => {
 
 <style lang="scss" scoped>
 .container {
-    border: 2px solid rgb(196, 196, 196);
-    border-radius: 8px;
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    width: calc(24.33% - 20px);
-    min-width: 300px;
-    max-width: 350px;
-    height: 200px;
-    background-color: #f2f2f2;
-    margin: 10px;
-    box-sizing: border-box;
-
-    &__details {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        &__title {
-            font-size: 24px;
-        }
-
-    }
-
     &__switch {
         display: flex;
         flex-direction: column;
@@ -80,7 +56,6 @@ const pluginStatus = computed(() => {
     display: inline-block;
     width: 45px;
     height: 25px;
-
 }
 
 .switch input {

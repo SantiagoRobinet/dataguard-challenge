@@ -13,9 +13,8 @@ fetchAndRegisterRoutes()
 
 <template>
   <header>
-    <!-- esto puede ser un Header component -->
     <div class="wrapper">
-      <h1>Data<span class="bold">Guard</span></h1>
+      <h1>Data<span class="bold bold--blue">Guard</span></h1>
 
       <nav>
         <CustomLink v-for="route in allRoutes" :key="route.id" :to="route.path" :label="route.name" :icon="route.icon" />
@@ -44,6 +43,7 @@ header {
 
 h1 {
   padding: 16px;
+  color: #003349;
 }
 
 
@@ -84,6 +84,7 @@ nav {
 .bold {
   font-weight: bold;
 }
+
 @media screen and (max-width: 550px) {
    h1 {
     font-size: 22px;

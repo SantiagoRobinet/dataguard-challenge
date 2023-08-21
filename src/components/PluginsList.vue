@@ -50,6 +50,8 @@ const handleClick = (payload: UpdatePluginPayload) => {
 h2 {
     font-size: 18px;
     margin-bottom: 32px;
+    color: #003349;
+    padding-left: 10px;
 }
 
 .flex-container {
