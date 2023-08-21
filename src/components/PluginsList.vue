@@ -14,9 +14,11 @@ const props = defineProps<{
 }>()
 const pluginsStore = usePluginsStore()
 
-const getActivePlugins = computed(() => pluginsStore.getPlugins(props.plugins.activePlugins))
-const getDisabledPlugins = computed(() => pluginsStore.getPlugins(props.plugins.disabledPlugins))
-const getInactivePlugins = computed(() => pluginsStore.getPlugins(props.plugins.inactivePlugins))
+
+const allTabPlugins = computed(() => {
+  return Object.values(props.plugins).flat().sort();
+});
+
 
 const emit = defineEmits(['onPluginClicked'])
 
@@ -29,14 +31,18 @@ const handleClick = (payload: UpdatePluginPayload) => {
 <template>
     <h2>{{ title }} Plugins</h2>
     <div class="flex-container">
-        <PluginItem v-for="activePlugin in getActivePlugins" :key="activePlugin.title" :id="activePlugin.id" :title="activePlugin.title"
-            :description="activePlugin.description" isActive @onClick="handleClick" class="flex-item" />
+    <PluginItem
+      v-for="plugin of allTabPlugins"
+      :key="plugin"
+      :id="plugin"
+      :title="pluginsStore.plugins[plugin].title"
+      :description="pluginsStore.plugins[plugin].description"
+      :isActive="plugins.activePlugins.includes(plugin)"
+      :isDisabled="plugins.disabledPlugins.includes(plugin)"
+      @onClick="handleClick"
+      class="flex-item"
+    />
 
-        <PluginItem v-for="inactivePlugin in getInactivePlugins" :key="inactivePlugin.title" :id="inactivePlugin.id" :title="inactivePlugin.title"
-            :description="inactivePlugin.description" @onClick="handleClick" class="flex-item" />
-
-        <PluginItem v-for="disabledPlugin in getDisabledPlugins" :key="disabledPlugin.title" :id="disabledPlugin.id" :title="disabledPlugin.title"
-            :description="disabledPlugin.description" isDisabled class="flex-item" />
     </div>
 </template>
 
