@@ -20,6 +20,8 @@ export function useRoutes() {
     const items = ref();
     const loading = ref(true);
 
+    const router = useRouter();
+
 
     async function fetchAndRegisterRoutes() {
         try {
@@ -28,8 +30,8 @@ export function useRoutes() {
             loading.value = false;
             createRoutes();
         } catch (error) {
-            console.error('Error fetching data:', error);
             loading.value = false;
+            router.push('/error');
         } finally {
             setTabsState({
                 tabs: items.value.tabs,
@@ -41,8 +43,8 @@ export function useRoutes() {
         }
     }
 
-    const router = useRouter();
     const allRoutes: IAllRoutes[] = [];
+
 
     function createRoutes() {
         items?.value.tabs.forEach((item: string) => {

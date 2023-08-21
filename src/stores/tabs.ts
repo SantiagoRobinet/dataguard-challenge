@@ -4,6 +4,7 @@ import axios from 'axios'
 import { usePluginsStore } from './plugins'
 import type { UpdatePluginPayload } from '@/types/plugin'
 import { api } from '@/constants/api'
+import { useRouter } from 'vue-router'
 
 interface State {
   tabs: string[],
@@ -21,7 +22,7 @@ export const useTabsStore = defineStore('tabs', {
     },
     arePluginsEnabled(state){
       const tabsNames: string[] =  Object.keys(state.tabdata);
-      const tabsWithElements: any = [];
+      const tabsWithElements: string[] = [];
       
       
       if(tabsNames.length){
@@ -37,11 +38,12 @@ export const useTabsStore = defineStore('tabs', {
     }
   },
   actions: {
-    setTabsState({tabs, tabdata}: any) {
+    setTabsState({tabs, tabdata}: State) {
       this.tabs = tabs
       this.tabdata = tabdata
     },
     async updateData({ pluginId, isActive }: UpdatePluginPayload, tabId: string) {
+      const router = useRouter();
       const { getAllPlugins } = usePluginsStore()
       const originSection = isActive ? 'active' : 'inactive'
       const newSection = isActive ? 'inactive' : 'active'
@@ -60,14 +62,18 @@ export const useTabsStore = defineStore('tabs', {
       };
 
       const post = await axios.put(api.dataURL, payload)
-      console.log(post)
+
       if(post.status === 200){
         this.tabdata[tabId][originSection] = this.tabdata[tabId][originSection].filter((element) => element !== pluginId)
         this.tabdata[tabId][newSection].push(pluginId)
       }
 
+      if(post.status === 500){
+        router.push('/error');
+      }
     },
     async toggleAllPlugins(isEnabled: boolean){
+      const router = useRouter();
       const { getAllPlugins } = usePluginsStore()
 
       const originSection = isEnabled ? 'active'  : 'disabled'
@@ -97,6 +103,11 @@ export const useTabsStore = defineStore('tabs', {
       if(post.status === 200){
        this.tabdata = newTabData
       }
+
+      if(post.status === 500){
+        router.push('/error');
+      }
+      
     }
   }
 
