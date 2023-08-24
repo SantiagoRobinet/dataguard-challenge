@@ -1,4 +1,4 @@
-import { defineAsyncComponent, ref } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from "vue-router";
 import { useTabsStore } from '@/stores/tabs';
 import { usePluginsStore } from '@/stores/plugins';
@@ -57,9 +57,9 @@ export function useRoutes() {
             router.addRoute({
                 name: routeName,
                 path: routePath,
-                component: defineAsyncComponent(() =>
+                component: () =>
                     import('../views/PluginsView.vue')
-                ),
+                ,
                 props: { tabdata: { tabId: item } },
             });
         });

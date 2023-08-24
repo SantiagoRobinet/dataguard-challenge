@@ -26,7 +26,7 @@ fetchAndRegisterRoutes()
 
   
   <LoadingView v-if="loading"/>
-  <RouterView  v-else/>
+  <RouterView :key="$route.fullPath" v-else/>
 </template>
 
 <style lang="scss" scoped>
